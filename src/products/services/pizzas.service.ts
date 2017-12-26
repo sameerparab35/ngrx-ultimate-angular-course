@@ -1,37 +1,26 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
-import { catchError } from 'rxjs/operators';
-import 'rxjs/add/observable/throw';
+import { DbService } from './db.service';
 
 import { Pizza } from '../models/pizza.model';
 
 @Injectable()
 export class PizzasService {
-  constructor(private http: HttpClient) {}
+    constructor(private dbService: DbService) {}
 
-  getPizzas(): Observable<Pizza[]> {
-    return this.http
-      .get<Pizza[]>(`/api/pizzas`)
-      .pipe(catchError((error: any) => Observable.throw(error.json())));
-  }
+    getPizzas() {
+        return this.dbService.getPizzas();
+    }
 
-  createPizza(payload: Pizza): Observable<Pizza> {
-    return this.http
-      .post<Pizza>(`/api/pizzas`, payload)
-      .pipe(catchError((error: any) => Observable.throw(error.json())));
-  }
+    createPizza(payload: Pizza) {
+        return this.dbService.createPizza(payload);
+    }
 
-  updatePizza(payload: Pizza): Observable<Pizza> {
-    return this.http
-      .put<Pizza>(`/api/pizzas/${payload.id}`, payload)
-      .pipe(catchError((error: any) => Observable.throw(error.json())));
-  }
+    updatePizza(payload: Pizza) {
+        return this.dbService.updatePizza(payload);
+    }
 
-  removePizza(payload: Pizza): Observable<Pizza> {
-    return this.http
-      .delete<any>(`/api/pizzas/${payload.id}`)
-      .pipe(catchError((error: any) => Observable.throw(error.json())));
-  }
+    removePizza(payload: Pizza) {
+        return this.dbService.removePizza(payload);
+    }
 }
