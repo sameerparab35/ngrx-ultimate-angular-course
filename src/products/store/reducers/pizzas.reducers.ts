@@ -1,15 +1,15 @@
-import { Pizza } from '../../models/pizza.model';
+import { IPizzaEntities, Pizza } from '../../models/pizza.model';
 
 import * as fromActions from '../actions';
 
 export interface IPizzasState {
-    data: Array<Pizza>;
+    entities: IPizzaEntities;
     loaded: boolean;
     loading: boolean;
 }
 
 export const initialState: IPizzasState = {
-    data: [],
+    entities: {},
     loaded: false,
     loading: false
 };
@@ -27,11 +27,20 @@ export function reducer(
         }
 
         case fromActions.LOAD_PIZZAS_SUCCSESS: {
+            const pizzas = action.payload;
+
+            const entities = pizzas.reduce((entities: IPizzaEntities, pizza: Pizza) => {
+                return {
+                    ...entities,
+                    [pizza.id]: pizza
+                };
+            }, {...state.entities});
+
             return {
                 ...state,
                 loaded: true,
                 loading: false,
-                data: action.payload
+                entities
             };
         }
 
