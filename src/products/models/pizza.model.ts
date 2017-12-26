@@ -1,12 +1,11 @@
-import { Topping } from '../models/topping.model';
+import { ITopping } from '../models/topping.model';
 
-// todo: rename IPizza
-export interface Pizza {
+export interface IPizza {
   id?: number;
   name?: string;
-  toppings?: Topping[];
+  toppings?: ITopping[];
 }
 
 export interface IPizzaEntities {
-	[id: number]: Pizza
+	[id: number]: IPizza
 }

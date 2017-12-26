@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
-import { Pizza } from '../../models/pizza.model';
+import { IPizza } from '../../models/pizza.model';
 import { PizzasService } from '../../services/pizzas.service';
 import { Observable } from 'rxjs/Observable';
 
@@ -29,7 +29,7 @@ import { Observable } from 'rxjs/Observable';
   `
 })
 export class ProductsComponent implements OnInit {
-    pizzas$: Observable<Pizza[]>;
+    pizzas$: Observable<IPizza[]>;
 
     constructor(private pizzaService: PizzasService) {}
 

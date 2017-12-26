@@ -6,7 +6,7 @@ import { of } from 'rxjs/observable/of';
 
 import { DbService } from '../../services';
 
-import { Pizza } from '../../models/pizza.model';
+import { IPizza } from '../../models/pizza.model';
 
 import * as fromActions from '../actions';
 
@@ -20,7 +20,7 @@ export class PizzasEffects {
         .pipe(
             switchMap(_ => this.dbService.getPizzas()),
             map(
-                (pizzas: Array<Pizza>) =>
+                (pizzas: Array<IPizza>) =>
                     new fromActions.LoadPizzasSuccess(pizzas)
             ),
             catchError(error => of(new fromActions.LoadPizzasFail(error)))

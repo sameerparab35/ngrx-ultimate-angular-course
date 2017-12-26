@@ -5,7 +5,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Topping } from '../../models/topping.model';
+import { ITopping } from '../../models/topping.model';
 
 const PIZZA_TOPPINGS_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -32,9 +32,9 @@ const PIZZA_TOPPINGS_ACCESSOR = {
   `,
 })
 export class PizzaToppingsComponent implements ControlValueAccessor {
-  @Input() toppings: Topping[] = [];
+  @Input() toppings: ITopping[] = [];
 
-  value: Topping[] = [];
+  value: ITopping[] = [];
 
   private onTouch: Function;
   private onModelChange: Function;
@@ -47,11 +47,11 @@ export class PizzaToppingsComponent implements ControlValueAccessor {
     this.onTouch = fn;
   }
 
-  writeValue(value: Topping[]) {
+  writeValue(value: ITopping[]) {
     this.value = value;
   }
 
-  selectTopping(topping: Topping) {
+  selectTopping(topping: ITopping) {
     if (this.existsInToppings(topping)) {
       this.value = this.value.filter(item => item.id !== topping.id);
     } else {
@@ -61,7 +61,7 @@ export class PizzaToppingsComponent implements ControlValueAccessor {
     this.onModelChange(this.value);
   }
 
-  existsInToppings(topping: Topping) {
+  existsInToppings(topping: ITopping) {
     return this.value.some(val => val.id === topping.id);
   }
 }

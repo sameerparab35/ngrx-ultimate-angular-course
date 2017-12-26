@@ -17,8 +17,8 @@ import {
 
 import { map } from 'rxjs/operators';
 
-import { Pizza } from '../../models/pizza.model';
-import { Topping } from '../../models/topping.model';
+import { IPizza } from '../../models/pizza.model';
+import { ITopping } from '../../models/topping.model';
 
 @Component({
   selector: 'pizza-form',
@@ -89,13 +89,13 @@ import { Topping } from '../../models/topping.model';
 export class PizzaFormComponent implements OnChanges {
   exists = false;
 
-  @Input() pizza: Pizza;
-  @Input() toppings: Topping[];
+  @Input() pizza: IPizza;
+  @Input() toppings: ITopping[];
 
   @Output() selected = new EventEmitter<number[]>();
-  @Output() create = new EventEmitter<Pizza>();
-  @Output() update = new EventEmitter<Pizza>();
-  @Output() remove = new EventEmitter<Pizza>();
+  @Output() create = new EventEmitter<IPizza>();
+  @Output() update = new EventEmitter<IPizza>();
+  @Output() remove = new EventEmitter<IPizza>();
 
   form = this.fb.group({
     name: ['', Validators.required],
@@ -120,7 +120,7 @@ export class PizzaFormComponent implements OnChanges {
     this.form
       .get('toppings')
       .valueChanges.pipe(
-        map(toppings => toppings.map((topping: Topping) => topping.id))
+        map(toppings => toppings.map((topping: ITopping) => topping.id))
       )
       .subscribe(value => this.selected.emit(value));
   }

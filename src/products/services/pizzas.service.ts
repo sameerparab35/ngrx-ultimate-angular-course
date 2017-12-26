@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { DbService } from './db.service';
 
-import { Pizza } from '../models/pizza.model';
+import { IPizza } from '../models/pizza.model';
 
 import * as fromReducers from '../store/reducers';
 import * as fromActions from '../store/actions';
@@ -20,15 +20,15 @@ export class PizzasService {
         return this.store.select(fromReducers.selectPizzas);
     }
 
-    createPizza(payload: Pizza) {
+    createPizza(payload: IPizza) {
         return this.dbService.createPizza(payload);
     }
 
-    updatePizza(payload: Pizza) {
+    updatePizza(payload: IPizza) {
         return this.dbService.updatePizza(payload);
     }
 
-    removePizza(payload: Pizza) {
+    removePizza(payload: IPizza) {
         return this.dbService.removePizza(payload);
     }
 }

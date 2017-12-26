@@ -1,4 +1,4 @@
-import { IPizzaEntities, Pizza } from '../../models/pizza.model';
+import { IPizzaEntities, IPizza } from '../../models/pizza.model';
 
 import * as fromActions from '../actions';
 
@@ -16,7 +16,7 @@ export const initialState: IPizzasState = {
 
 export function reducer(
     state = initialState,
-    action: fromActions.PizzasActions
+    action: fromActions.TPizzasActions
 ): IPizzasState {
     switch (action.type) {
         case fromActions.LOAD_PIZZAS: {
@@ -29,7 +29,7 @@ export function reducer(
         case fromActions.LOAD_PIZZAS_SUCCSESS: {
             const pizzas = action.payload;
 
-            const entities = pizzas.reduce((entities: IPizzaEntities, pizza: Pizza) => {
+            const entities = pizzas.reduce((entities: IPizzaEntities, pizza: IPizza) => {
                 return {
                     ...entities,
                     [pizza.id]: pizza

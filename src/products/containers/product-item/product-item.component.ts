@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Pizza } from '../../models/pizza.model';
+import { IPizza } from '../../models/pizza.model';
 import { PizzasService } from '../../services/pizzas.service';
 
-import { Topping } from '../../models/topping.model';
+import { ITopping } from '../../models/topping.model';
 import { ToppingsService } from '../../services/toppings.service';
 
 @Component({
@@ -28,9 +28,9 @@ import { ToppingsService } from '../../services/toppings.service';
   `
 })
 export class ProductItemComponent implements OnInit {
-    pizza: Pizza;
-    visualise: Pizza;
-    toppings: Topping[];
+    pizza: IPizza;
+    visualise: IPizza;
+    toppings: ITopping[];
 
     constructor(
         private pizzaService: PizzasService,
@@ -68,19 +68,19 @@ export class ProductItemComponent implements OnInit {
         this.visualise = { ...this.pizza, toppings };
     }
 
-    onCreate(event: Pizza) {
+    onCreate(event: IPizza) {
         this.pizzaService.createPizza(event).subscribe(pizza => {
             this.router.navigate([`/products/${pizza.id}`]);
         });
     }
 
-    onUpdate(event: Pizza) {
+    onUpdate(event: IPizza) {
         this.pizzaService.updatePizza(event).subscribe(() => {
             this.router.navigate([`/products`]);
         });
     }
 
-    onRemove(event: Pizza) {
+    onRemove(event: IPizza) {
         const remove = window.confirm('Are you sure?');
         if (remove) {
             this.pizzaService.removePizza(event).subscribe(() => {

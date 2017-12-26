@@ -5,8 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import 'rxjs/add/observable/throw';
 
-import { Pizza } from '../models/pizza.model';
-import { Topping } from '../models/topping.model';
+import { IPizza } from '../models/pizza.model';
+import { ITopping } from '../models/topping.model';
 
 @Injectable()
 export class DbService {
@@ -17,25 +17,25 @@ export class DbService {
     // pizzas
 
     getPizzas() {
-        return this.get<Array<Pizza>>('pizzas');
+        return this.get<Array<IPizza>>('pizzas');
     }
 
-    createPizza(payload: Pizza) {
-        return this.post<Pizza>('pizzas', payload);
+    createPizza(payload: IPizza) {
+        return this.post<IPizza>('pizzas', payload);
     }
 
-    updatePizza(payload: Pizza) {
-        return this.put<Pizza>(`pizzas/${payload.id}`, payload);
+    updatePizza(payload: IPizza) {
+        return this.put<IPizza>(`pizzas/${payload.id}`, payload);
     }
 
-    removePizza(payload: Pizza): Observable<Pizza> {
+    removePizza(payload: IPizza): Observable<IPizza> {
         return this.delete<any>(`pizzas/${payload.id}`);
     }
 
     // toppings
 
 	getToppings() {
-		return this.get<Array<Topping>>('toppings');
+		return this.get<Array<ITopping>>('toppings');
 	}
 
     private get<T>(target: string): Observable<T> {
