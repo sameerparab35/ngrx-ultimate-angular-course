@@ -1,11 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+
+import { Observable } from 'rxjs/Observable';
 
 import { IPizza } from '../../models/pizza.model';
-import { PizzasService } from '../../services/pizzas.service';
-
 import { ITopping } from '../../models/topping.model';
-import { ToppingsService } from '../../services/toppings.service';
+
+import { PizzasService } from '../../services';
+import { ToppingsService } from '../../services';
 
 @Component({
     selector: 'product-item',
@@ -14,78 +15,46 @@ import { ToppingsService } from '../../services/toppings.service';
     <div 
       class="product-item">
       <pizza-form
-        [pizza]="pizza"
-        [toppings]="toppings"
+        [pizza]="pizza$ | async"
+        [toppings]="toppings$ | async"
         (selected)="onSelect($event)"
         (create)="onCreate($event)"
         (update)="onUpdate($event)"
         (remove)="onRemove($event)">
         <pizza-display
-          [pizza]="visualise">
+          [pizza]="visualise$ | async">
         </pizza-display>
       </pizza-form>
     </div>
   `
 })
 export class ProductItemComponent implements OnInit {
-    pizza: IPizza;
-    visualise: IPizza;
-    toppings: ITopping[];
+    pizza$: Observable<IPizza>;
+    toppings$: Observable<Array<ITopping>>;
+
+    visualise$: Observable<IPizza>;
 
     constructor(
         private pizzaService: PizzasService,
-        private toppingsService: ToppingsService,
-        private route: ActivatedRoute,
-        private router: Router
+        private toppingsService: ToppingsService
     ) {}
 
     ngOnInit() {
-        this.pizzaService.getPizzas().subscribe(pizzas => {
-            const param = this.route.snapshot.params.id;
-            let pizza;
-            if (param === 'new') {
-                pizza = {};
-            } else {
-                pizza = pizzas.find(pizza => pizza.id == parseInt(param, 10));
-            }
-            this.pizza = pizza;
-            this.toppingsService.getToppings().subscribe(toppings => {
-                this.toppings = toppings;
-                this.onSelect(toppings.map(topping => topping.id));
-            });
-        });
+        this.pizza$ = this.pizzaService.getSelectedOrNewPizza();
+        this.visualise$ = this.pizza$;
+
+        this.toppings$ = this.toppingsService.getToppings();
     }
 
-    onSelect(event: number[]) {
-        let toppings;
-        if (this.toppings && this.toppings.length) {
-            toppings = event.map(id =>
-                this.toppings.find(topping => topping.id === id)
-            );
-        } else {
-            toppings = this.pizza.toppings;
-        }
-        this.visualise = { ...this.pizza, toppings };
-    }
+    onSelect(event: number[]) {}
 
-    onCreate(event: IPizza) {
-        this.pizzaService.createPizza(event).subscribe(pizza => {
-            this.router.navigate([`/products/${pizza.id}`]);
-        });
-    }
+    onCreate(event: IPizza) {}
 
-    onUpdate(event: IPizza) {
-        this.pizzaService.updatePizza(event).subscribe(() => {
-            this.router.navigate([`/products`]);
-        });
-    }
+    onUpdate(event: IPizza) {}
 
     onRemove(event: IPizza) {
         const remove = window.confirm('Are you sure?');
         if (remove) {
-            this.pizzaService.removePizza(event).subscribe(() => {
-                this.router.navigate([`/products`]);
-            });
         }
     }
 }

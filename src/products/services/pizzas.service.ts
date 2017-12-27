@@ -8,6 +8,8 @@ import { IPizza } from '../models/pizza.model';
 import * as fromStore from '../store';
 import * as fromActions from '../store/actions';
 import * as fromSelectors from '../store/selectors';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class PizzasService {
@@ -16,9 +18,21 @@ export class PizzasService {
         private store: Store<fromStore.IProductsState>
     ) {}
 
+    loadPizzas() {
+	    this.store.dispatch(new fromActions.LoadPizzas());
+    }
+
     getPizzas() {
-        this.store.dispatch(new fromActions.LoadPizzas());
         return this.store.select(fromSelectors.selectPizzas);
+    }
+
+    getSelectedPizza(): Observable<IPizza> {
+        return this.store.select(fromSelectors.selectSelectedPizza);
+    }
+
+	getSelectedOrNewPizza() {
+        return this.getSelectedPizza()
+            .pipe(map((pizza: IPizza) => pizza || {}));
     }
 
     createPizza(payload: IPizza) {

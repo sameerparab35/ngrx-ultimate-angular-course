@@ -34,6 +34,7 @@ export class ProductsComponent implements OnInit {
     constructor(private pizzaService: PizzasService) {}
 
     ngOnInit() {
+        this.pizzaService.loadPizzas();
         this.pizzas$ = this.pizzaService.getPizzas();
     }
 }
