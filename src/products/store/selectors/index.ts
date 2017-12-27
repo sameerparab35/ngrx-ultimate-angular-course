@@ -3,6 +3,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromRootStore from '../../../app/store';
 import * as fromProductStore from '../../store';
 import * as fromPizzasReducers from '../reducers/pizzas.reducers';
+import * as fromToppingsReducers from '../reducers/toppings.reducers';
 
 import { IPizzaEntities } from '../../models/pizza.model';
 
@@ -37,4 +38,23 @@ export const selectSelectedPizza = createSelector(
     selectPizzasEntities,
     fromRootStore.selectParams,
     (entities, params) => entities[params.pizzaId]
+);
+
+// toppings
+
+export const selectToppingsState = createSelector(
+	selectProductsState,
+	(state: fromProductStore.IProductsState) => state.toppings
+);
+export const selectToppings = createSelector(
+	selectToppingsState,
+	(state: fromToppingsReducers.IToppingsState) => state.data
+);
+export const selectToppingsLoading = createSelector(
+	selectToppingsState,
+	(state: fromToppingsReducers.IToppingsState) => state.loading
+);
+export const selectToppingsLoaded = createSelector(
+	selectToppingsState,
+	(state: fromToppingsReducers.IToppingsState) => state.loaded
 );
