@@ -11,3 +11,8 @@ export const selectRouterState = createSelector(
     selectRouter,
     router => router.state
 );
+
+export const selectParams = createSelector(
+    selectRouterState,
+    routerState => routerState.params
+);
