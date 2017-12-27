@@ -5,19 +5,20 @@ import { DbService } from './db.service';
 
 import { IPizza } from '../models/pizza.model';
 
-import * as fromReducers from '../store/reducers';
+import * as fromStore from '../store';
 import * as fromActions from '../store/actions';
+import * as fromSelectors from '../store/selectors';
 
 @Injectable()
 export class PizzasService {
     constructor(
         private dbService: DbService,
-        private store: Store<fromReducers.IProductsState>
+        private store: Store<fromStore.IProductsState>
     ) {}
 
     getPizzas() {
         this.store.dispatch(new fromActions.LoadPizzas());
-        return this.store.select(fromReducers.selectPizzas);
+        return this.store.select(fromSelectors.selectPizzas);
     }
 
     createPizza(payload: IPizza) {
