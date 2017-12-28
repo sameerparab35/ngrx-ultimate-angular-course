@@ -25,4 +25,14 @@ export class PizzasEffects {
             ),
             catchError(error => of(new fromActions.LoadPizzasFail(error)))
         );
+
+    @Effect()
+    createPizza$ = this.actions$.ofType(fromActions.CREATE_PIZZA).pipe(
+        map((action: fromActions.CreatePizza) => action.payload),
+        switchMap((pizza: IPizza) => {
+            return this.dbService.createPizza(pizza);
+        }),
+        map((pizza: IPizza) => new fromActions.CreatePizzaSuccess(pizza)),
+        catchError(error => of(new fromActions.CreatePizzaFail(error)))
+    );
 }

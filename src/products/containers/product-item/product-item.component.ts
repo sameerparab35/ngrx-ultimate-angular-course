@@ -59,7 +59,9 @@ export class ProductItemComponent implements OnInit {
         this.toppingsService.selectToppings(event);
     }
 
-    onCreate(event: IPizza) {}
+    onCreate(event: IPizza) {
+        this.pizzaService.createPizza(event);
+    }
 
     onUpdate(event: IPizza) {}
 

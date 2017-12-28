@@ -40,7 +40,7 @@ export class PizzasService {
     }
 
     createPizza(payload: IPizza) {
-        return this.dbService.createPizza(payload);
+        this.store.dispatch(new fromActions.CreatePizza(payload));
     }
 
     updatePizza(payload: IPizza) {

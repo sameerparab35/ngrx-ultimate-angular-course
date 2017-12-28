@@ -29,12 +29,15 @@ export function reducer(
         case fromActions.LOAD_PIZZAS_SUCCSESS: {
             const pizzas = action.payload;
 
-            const entities = pizzas.reduce((entities: IPizzaEntities, pizza: IPizza) => {
-                return {
-                    ...entities,
-                    [pizza.id]: pizza
-                };
-            }, {...state.entities});
+            const entities = pizzas.reduce(
+                (entities: IPizzaEntities, pizza: IPizza) => {
+                    return {
+                        ...entities,
+                        [pizza.id]: pizza
+                    };
+                },
+                { ...state.entities }
+            );
 
             return {
                 ...state,
@@ -49,6 +52,16 @@ export function reducer(
                 ...state,
                 loading: false,
                 loaded: false
+            };
+        }
+
+        case fromActions.CREATE_PIZZA_SUCCESS: {
+            const createdPizza = action.payload;
+            const newPizzaEntity = { [createdPizza.id]: createdPizza };
+            const entities = { ...state.entities, ...newPizzaEntity };
+            return {
+                ...state,
+                entities
             };
         }
 
