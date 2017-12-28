@@ -67,10 +67,8 @@ export function reducer(
         }
 
         case fromActions.REMOVE_PIZZA_SUCCESS: {
-            const removedPizza = action.payload;
-            const entities = { ...state.entities };
-
-            delete entities[removedPizza.id];
+            const removedPizzaId = action.payload.id;
+            const { [removedPizzaId]: removed, ...entities } = state.entities;
 
             return {
                 ...state,
