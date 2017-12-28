@@ -55,20 +55,11 @@ export function reducer(
             };
         }
 
-        case fromActions.CREATE_PIZZA_SUCCESS: {
-            const createdPizza = action.payload;
-            const newPizzaEntity = { [createdPizza.id]: createdPizza };
-            const entities = { ...state.entities, ...newPizzaEntity };
-            return {
-                ...state,
-                entities
-            };
-        }
-
+        case fromActions.CREATE_PIZZA_SUCCESS:
         case fromActions.UPDATE_PIZZA_SUCCESS: {
-            const updatedPizza = action.payload;
-            const updatedPizzaEntity = { [updatedPizza.id]: updatedPizza };
-            const entities = { ...state.entities, ...updatedPizzaEntity };
+            const pizza = action.payload;
+            const pizzaEntity = { [pizza.id]: pizza };
+            const entities = { ...state.entities, ...pizzaEntity };
             return {
                 ...state,
                 entities
@@ -76,7 +67,7 @@ export function reducer(
         }
 
         case fromActions.REMOVE_PIZZA_SUCCESS: {
-        	const removedPizza = action.payload;
+            const removedPizza = action.payload;
             const entities = { ...state.entities };
 
             delete entities[removedPizza.id];
