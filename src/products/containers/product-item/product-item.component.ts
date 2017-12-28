@@ -70,6 +70,7 @@ export class ProductItemComponent implements OnInit {
     onRemove(event: IPizza) {
         const remove = window.confirm('Are you sure?');
         if (remove) {
+        	this.pizzaService.removePizza(event);
         }
     }
 }

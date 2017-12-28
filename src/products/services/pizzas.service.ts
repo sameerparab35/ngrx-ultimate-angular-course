@@ -49,6 +49,6 @@ export class PizzasService {
     }
 
     removePizza(payload: IPizza) {
-        return this.dbService.removePizza(payload);
+        this.store.dispatch(new fromActions.RemovePizza(payload));
     }
 }
