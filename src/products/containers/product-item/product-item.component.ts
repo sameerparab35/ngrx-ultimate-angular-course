@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
+import { tap } from 'rxjs/operators';
 
 import { IPizza } from '../../models/pizza.model';
 import { ITopping } from '../../models/topping.model';
@@ -40,13 +41,23 @@ export class ProductItemComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.pizza$ = this.pizzaService.getSelectedOrNewPizza();
-        this.visualise$ = this.pizza$;
+        this.pizza$ = this.pizzaService.getSelectedOrNewPizza().pipe(
+            tap((pizza: IPizza) => {
+                const toppings = pizza.toppings || [];
+
+                const selectedToppings = toppings.map(topping => topping.id);
+
+                this.onSelect(selectedToppings);
+            })
+        );
 
         this.toppings$ = this.toppingsService.getToppings();
+        this.visualise$ = this.pizzaService.getVisualisedPizza();
     }
 
-    onSelect(event: number[]) {}
+    onSelect(event: number[]) {
+        this.toppingsService.selectToppings(event);
+    }
 
     onCreate(event: IPizza) {}
 

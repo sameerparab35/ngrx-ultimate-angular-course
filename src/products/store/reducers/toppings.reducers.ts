@@ -6,12 +6,14 @@ export interface IToppingsState {
     data: Array<ITopping>;
     loaded: boolean;
     loading: boolean;
+	selectedToppings: Array<number>;
 }
 
 export const initialState: IToppingsState = {
 	data: [],
     loaded: false,
-    loading: false
+    loading: false,
+	selectedToppings: []
 };
 
 export function reducer(
@@ -19,6 +21,13 @@ export function reducer(
     action: fromActions.TToppingsActions
 ): IToppingsState {
     switch (action.type) {
+        case fromActions.SELECT_TOPPINGS: {
+            return {
+                ...state,
+                selectedToppings: action.payload
+            }
+        }
+
         case fromActions.LOAD_TOPPINGS: {
             return {
                 ...state,

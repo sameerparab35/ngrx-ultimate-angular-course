@@ -4,6 +4,7 @@ import { ITopping } from '../../models/topping.model';
 export const LOAD_TOPPINGS = '[Products] Get Toppings';
 export const LOAD_TOPPINGS_FAIL = '[Products] Get Toppings Fail';
 export const LOAD_TOPPINGS_SUCCSESS = '[Products] Get Toppings Success';
+export const SELECT_TOPPINGS = '[Products] Select toppings for visualisation';
 
 // actions
 
@@ -23,6 +24,12 @@ export class LoadToppingsFail implements Action {
     constructor(public payload: any) {}
 }
 
+export class SelectToppings implements Action {
+    readonly type = SELECT_TOPPINGS;
+
+    constructor(public payload: Array<number>) {}
+}
+
 // action types
 
-export type TToppingsActions = LoadToppings | LoadToppingsSuccess | LoadToppingsFail;
+export type TToppingsActions = LoadToppings | LoadToppingsSuccess | LoadToppingsFail | SelectToppings;

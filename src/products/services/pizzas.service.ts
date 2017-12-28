@@ -35,6 +35,10 @@ export class PizzasService {
             .pipe(map((pizza: IPizza) => pizza || {}));
     }
 
+	getVisualisedPizza() {
+        return this.store.select(fromSelectors.selectVisualisedPizza);
+    }
+
     createPizza(payload: IPizza) {
         return this.dbService.createPizza(payload);
     }

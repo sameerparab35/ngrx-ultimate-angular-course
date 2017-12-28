@@ -15,8 +15,15 @@ export class ToppingsService {
         private store: Store<fromStore.IProductsState>
     ) {}
 
-    getToppings() {
+    loadToppings() {
         this.store.dispatch(new fromActions.LoadToppings());
+    }
+
+    getToppings() {
         return this.store.select(fromSelectors.selectToppings);
+    }
+
+	selectToppings(toppings: Array<number>) {
+        this.store.dispatch(new fromActions.SelectToppings(toppings));
     }
 }
