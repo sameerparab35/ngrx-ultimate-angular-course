@@ -65,6 +65,16 @@ export function reducer(
             };
         }
 
+        case fromActions.UPDATE_PIZZA_SUCCESS: {
+            const updatedPizza = action.payload;
+            const updatedPizzaEntity = { [updatedPizza.id]: updatedPizza };
+            const entities = { ...state.entities, ...updatedPizzaEntity };
+            return {
+                ...state,
+                entities
+            };
+        }
+
         default: {
             return state;
         }

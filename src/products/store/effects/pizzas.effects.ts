@@ -35,4 +35,14 @@ export class PizzasEffects {
         map((pizza: IPizza) => new fromActions.CreatePizzaSuccess(pizza)),
         catchError(error => of(new fromActions.CreatePizzaFail(error)))
     );
+
+    @Effect()
+    updatePizza$ = this.actions$.ofType(fromActions.UPDATE_PIZZA).pipe(
+        map((action: fromActions.UpdatePizza) => action.payload),
+        switchMap((pizza: IPizza) => {
+            return this.dbService.updatePizza(pizza);
+        }),
+        map((pizza: IPizza) => new fromActions.UpdatePizzaSuccess(pizza)),
+        catchError(error => of(new fromActions.UpdatePizzaFail(error)))
+    );
 }

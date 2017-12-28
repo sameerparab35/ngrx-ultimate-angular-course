@@ -19,7 +19,7 @@ export class PizzasService {
     ) {}
 
     loadPizzas() {
-	    this.store.dispatch(new fromActions.LoadPizzas());
+        this.store.dispatch(new fromActions.LoadPizzas());
     }
 
     getPizzas() {
@@ -30,12 +30,13 @@ export class PizzasService {
         return this.store.select(fromSelectors.selectSelectedPizza);
     }
 
-	getSelectedOrNewPizza() {
-        return this.getSelectedPizza()
-            .pipe(map((pizza: IPizza) => pizza || {}));
+    getSelectedOrNewPizza() {
+        return this.getSelectedPizza().pipe(
+            map((pizza: IPizza) => pizza || {})
+        );
     }
 
-	getVisualisedPizza() {
+    getVisualisedPizza() {
         return this.store.select(fromSelectors.selectVisualisedPizza);
     }
 
@@ -44,7 +45,7 @@ export class PizzasService {
     }
 
     updatePizza(payload: IPizza) {
-        return this.dbService.updatePizza(payload);
+        this.store.dispatch(new fromActions.UpdatePizza(payload));
     }
 
     removePizza(payload: IPizza) {

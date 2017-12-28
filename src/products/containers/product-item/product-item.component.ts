@@ -63,7 +63,9 @@ export class ProductItemComponent implements OnInit {
         this.pizzaService.createPizza(event);
     }
 
-    onUpdate(event: IPizza) {}
+    onUpdate(event: IPizza) {
+    	this.pizzaService.updatePizza(event);
+    }
 
     onRemove(event: IPizza) {
         const remove = window.confirm('Are you sure?');
