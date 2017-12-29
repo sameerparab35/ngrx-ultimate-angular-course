@@ -9,6 +9,7 @@ import { DbService } from '../../services';
 import { IPizza } from '../../models/pizza.model';
 
 import * as fromActions from '../actions';
+import * as fromRouterActions from '../../../app/store/actions';
 
 @Injectable()
 export class PizzasEffects {
@@ -37,6 +38,17 @@ export class PizzasEffects {
     );
 
     @Effect()
+    createPizzaSuccess$ = this.actions$
+        .ofType(fromActions.CREATE_PIZZA_SUCCESS)
+        .pipe(
+            map((action: fromActions.CreatePizzaSuccess) => action.payload),
+            map(
+                (pizza: IPizza) =>
+                    new fromRouterActions.Go({ path: ['/products', pizza.id] })
+            )
+        );
+
+    @Effect()
     updatePizza$ = this.actions$.ofType(fromActions.UPDATE_PIZZA).pipe(
         map((action: fromActions.UpdatePizza) => action.payload),
         switchMap((pizza: IPizza) => {
@@ -60,4 +72,12 @@ export class PizzasEffects {
                 );
         })
     );
+
+    @Effect()
+    handlePizzaSuccess$ = this.actions$
+        .ofType(
+            fromActions.UPDATE_PIZZA_SUCCESS,
+            fromActions.REMOVE_PIZZA_SUCCESS
+        )
+        .pipe(map(() => new fromRouterActions.Go({ path: ['/products'] })));
 }
