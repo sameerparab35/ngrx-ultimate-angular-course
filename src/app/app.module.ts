@@ -46,7 +46,7 @@ import * as fromStore from './store';
         BrowserAnimationsModule,
         RouterModule.forRoot(ROUTES),
         StoreModule.forRoot(fromStore.reducers, { metaReducers }),
-        EffectsModule.forRoot([]),
+        EffectsModule.forRoot(fromStore.effects),
         StoreRouterConnectingModule,
         environment.development ? StoreDevtoolsModule.instrument() : []
     ],
