@@ -26,6 +26,10 @@ export class PizzasService {
         return this.store.select(fromSelectors.selectPizzas);
     }
 
+    getPizzaEntities() {
+        return this.store.select(fromSelectors.selectPizzasEntities);
+    }
+
     getSelectedPizza(): Observable<IPizza> {
         return this.store.select(fromSelectors.selectSelectedPizza);
     }
@@ -50,5 +54,9 @@ export class PizzasService {
 
     removePizza(payload: IPizza) {
         this.store.dispatch(new fromActions.RemovePizza(payload));
+    }
+
+    arePizzasLoaded(): Observable<boolean> {
+        return this.store.select(fromSelectors.selectPizzasLoaded);
     }
 }

@@ -15,6 +15,9 @@ import * as fromContainers from './containers';
 // services
 import * as fromServices from './services';
 
+// guards
+import * as fromGuards from './guards';
+
 // store
 import * as fromProductsStore from './store';
 
@@ -22,16 +25,22 @@ import * as fromProductsStore from './store';
 export const ROUTES: Routes = [
     {
         path: '',
+        canActivate: [fromGuards.PizzasLoadedGuard],
         component: fromContainers.ProductsComponent
     },
     {
         path: 'new',
+        canActivate: [fromGuards.ToppingsLoadedGuard],
         component: fromContainers.ProductItemComponent
     },
-	{
-		path: ':pizzaId',
-		component: fromContainers.ProductItemComponent
-	}
+    {
+        path: ':pizzaId',
+        canActivate: [
+            fromGuards.PizzaExistsGuard,
+            fromGuards.ToppingsLoadedGuard
+        ],
+        component: fromContainers.ProductItemComponent
+    }
 ];
 
 @NgModule({
@@ -40,10 +49,10 @@ export const ROUTES: Routes = [
         ReactiveFormsModule,
         HttpClientModule,
         StoreModule.forFeature('products', fromProductsStore.reducers),
-	    EffectsModule.forFeature(fromProductsStore.effects),
+        EffectsModule.forFeature(fromProductsStore.effects),
         RouterModule.forChild(ROUTES)
     ],
-    providers: [...fromServices.services],
+    providers: [...fromServices.services, ...fromGuards.guards],
     declarations: [...fromContainers.containers, ...fromComponents.components],
     exports: [...fromContainers.containers, ...fromComponents.components]
 })

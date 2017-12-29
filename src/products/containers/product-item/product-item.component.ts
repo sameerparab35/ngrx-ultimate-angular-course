@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import { tap } from 'rxjs/operators';
@@ -12,6 +12,7 @@ import { ToppingsService } from '../../services';
 @Component({
     selector: 'product-item',
     styleUrls: ['product-item.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
     <div 
       class="product-item">

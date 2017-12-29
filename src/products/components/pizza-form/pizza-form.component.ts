@@ -10,7 +10,6 @@ import {
 import {
   FormControl,
   FormGroup,
-  FormArray,
   FormBuilder,
   Validators,
 } from '@angular/forms';
@@ -23,6 +22,7 @@ import { ITopping } from '../../models/topping.model';
 @Component({
   selector: 'pizza-form',
   styleUrls: ['pizza-form.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="pizza-form">
       <form [formGroup]="form">

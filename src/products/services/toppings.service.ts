@@ -19,6 +19,10 @@ export class ToppingsService {
         this.store.dispatch(new fromActions.LoadToppings());
     }
 
+    areToppingsLoaded() {
+        return this.store.select(fromSelectors.selectToppingsLoaded);
+    }
+
     getToppings() {
         return this.store.select(fromSelectors.selectToppings);
     }
